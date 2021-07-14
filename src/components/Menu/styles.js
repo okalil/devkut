@@ -37,7 +37,7 @@ const Container = styled.div`
     background: #5579a1;
     padding: 10px 42px;
     border: 0;
-    background-image: url('/icons/search.svg');
+    background-image: url('/search.svg');
     background-position: 15px center;
     background-repeat: no-repeat;
     border-radius: 1000px;
@@ -86,7 +86,7 @@ const Nav = styled.nav`
   }
 `
 
-const ProfileSideBarContainer = styled.div`
+const ProfileSidebarContainer = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -114,23 +114,7 @@ const ProfileSideBarContainer = styled.div`
     border-color: transparent;
     border-bottom-color: #ecf2fa;
   }
-`
 
-const ProfileSidebarMenu = styled.div`
-  a {
-    display: flex;
-    align-items: center;
-
-    text-decoration: none;
-    font-size: 12px;
-    color: #2e7bb4;
-
-    img {
-      width: 16px;
-      height: 16px;
-      margin-right: 5px;
-    }
-  }
 `
 
 export {
@@ -138,6 +122,5 @@ export {
   Container,
   Logo,
   Nav,
-  ProfileSideBarContainer,
-  ProfileSidebarMenu
+  ProfileSidebarContainer
 }

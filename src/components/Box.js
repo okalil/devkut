@@ -7,24 +7,23 @@ const Box = styled.div`
 
   /* css pré-pronto */
 
-  /* .boxLink {
+  a {
     font-size: 14px;
     color: #2e7bb4;
     text-decoration: none;
     font-weight: 800;
   }
-  .title {
+  h1 {
     font-size: 32px;
     font-weight: 400;
     margin-bottom: 20px;
   }
-  .subTitle {
+  h2 {
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 20px;
-  } */
-
-  h2 {
+  }
+  h3 {
     margin-bottom: 20px;
     font-size: 16px;
     font-weight: 700;

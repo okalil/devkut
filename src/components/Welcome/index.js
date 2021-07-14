@@ -20,6 +20,7 @@ export function Welcome(props) {
 
   return (
     <Box>
+      <h1>Bem vindo(a)</h1>
       <IconSetList>
         {icons.map(({ name, icon }) => {
           return (
@@ -42,7 +43,7 @@ export function Welcome(props) {
                     <img
                       src={`/${icon}.svg`}
                       alt={'icon'}
-                      key={name.toLocaleLowerCase()}
+                      key={name+i}
                       style={{ opacity: isActive ? 1 : 0.5 }}
                     />
                   )

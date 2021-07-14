@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Box } from '../Box'
 
-const FriendsContainer = styled(Box)`
+const RelationsContainer = styled(Box)`
+  margin-bottom: 10px;
+
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -59,4 +61,4 @@ const UserLink = styled.a`
   }
 `
 
-export { FriendsContainer, UserLink }
+export { RelationsContainer, UserLink }

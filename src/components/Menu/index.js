@@ -2,30 +2,23 @@ import Link from 'next/link'
 
 import { useState } from 'react'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { ProfileSidebarContent } from '../ProfileSidebarContent'
 
 import {
   MenuWrapper,
   Container,
   Logo,
   Nav,
-  ProfileSideBarContainer,
-  ProfileSidebarMenu
+  ProfileSidebarContainer
 } from './styles'
 
-export function Menu({ githubUser = 'okalil' }) {
+export function Menu({ children }) {
   const [isMenuOpen, setMenuState] = useState(false)
 
   const links = [
     { name: 'Início', slug: '/' },
     { name: 'Amigos', slug: '/amigos' },
     { name: 'Comunidades', slug: '/comunidades' }
-  ]
-
-  const sidebarLinks = [
-    { name: 'Perfil', href: '/', src: 'user' },
-    { name: 'Recados', href: '/', src: 'book' },
-    { name: 'Fotos', href: '/', src: 'camera' },
-    { name: 'Depoimentos', href: '/', src: 'sun' }
   ]
 
   const sidebarStyle = isMenuOpen
@@ -35,26 +28,28 @@ export function Menu({ githubUser = 'okalil' }) {
   return (
     <MenuWrapper>
       <Container>
-        <Nav>
-          <Logo src="/logo.svg" alt="Logo" />
-
-          {links.map(item => {
-            return (
-              <Link href={item.slug}>
-                <a key={item.name.toLocaleLowerCase()}>{item.name}</a>
+        <Logo src="/logo.svg" alt="Logo" />
+        {useMediaQuery('(min-width: 860px)') && (
+          <>
+            <Nav>
+              {links.map(item => {
+                return (
+                  <Link href={item.slug} key={item.name.toLocaleLowerCase()}>
+                    <a>{item.name}</a>
+                  </Link>
+                )
+              })}
+            </Nav>
+            <Nav>
+              <Link href="/logout">
+                <a>Sair</a>
               </Link>
-            )
-          })}
-        </Nav>
-
-        <Nav>
-          <Link href="/logout">
-            <a>Sair</a>
-          </Link>
-          <div>
-            <input placeholder="Pesquisar no Devkut" />
-          </div>
-        </Nav>
+              <div>
+                <input placeholder="Pesquisar no Devkut" />
+              </div>
+            </Nav>
+          </>
+        )}
 
         {!useMediaQuery('(min-width: 860px)') && (
           <button onClick={() => setMenuState(!isMenuOpen)}>
@@ -68,33 +63,9 @@ export function Menu({ githubUser = 'okalil' }) {
       </Container>
 
       {!useMediaQuery('(min-width: 860px)') && (
-        <ProfileSideBarContainer style={sidebarStyle}>
-          <div>
-            <img src={`https://github.com/${githubUser}.png`} />
-            <hr />
-            <p>
-              <Link href={`/user/${githubUser}`}>
-                <a>@{githubUser}</a>
-              </Link>
-            </p>
-            <hr />
-
-            <ProfileSidebarMenu>
-              <nav>
-                {sidebarLinks.map(item => {
-                  return (
-                    <Link href={item.href}>
-                      <a>
-                        <img src={item.src} alt={item.name.toLowerCase()} />
-                        {item.name}
-                      </a>
-                    </Link>
-                  )
-                })}
-              </nav>
-            </ProfileSidebarMenu>
-          </div>
-        </ProfileSideBarContainer>
+        <ProfileSidebarContainer style={sidebarStyle}>
+          <div>{children}</div>
+        </ProfileSidebarContainer>
       )}
     </MenuWrapper>
   )

@@ -49,7 +49,7 @@ export default function Home({ followers, allCommunities }) {
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const githubFollowers = await axios.get(
     'https://api.github.com/users/okalil/followers'
   )

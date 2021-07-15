@@ -1,17 +1,30 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { Box } from '../Box'
 
-export function Actions({communities,setCommunities}) {
-
+export function Actions({ communities, setCommunities }) {
   const handleCreateCommunity = event => {
     event.preventDefault()
 
     const formData = new FormData(event.target)
     const community = {
-      id: new Date().toISOString(),
       title: formData.get('title'),
-      image: formData.get('image'),
+      imageUrl: formData.get('image'),
+      creatorSlug: 'okalil'
     }
+
+    axios.post(
+      '/api/communities',
+      {
+        data: community
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
     setCommunities([...communities, community])
   }
 

@@ -7,11 +7,11 @@ export function Relations({ title, relations }) {
         {title} ({relations.length})
       </h3>
       <ul>
-        {relations.map(({id, title, image}) => {
+        {relations.map(({id, title, imageUrl}) => {
           return (
             <li key={id}>
               <UserLink href="/">
-                <img src={image} alt="user img" />
+                <img src={imageUrl} alt="user img" />
                 <span>{title}</span>
               </UserLink>
             </li>

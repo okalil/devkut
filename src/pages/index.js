@@ -11,24 +11,17 @@ import { MainGrid } from '../components/MainGrid'
 import { useState } from 'react'
 import axios from 'axios'
 
-export default function Home({ followers }) {
+export default function Home({ followers, allCommunities }) {
   const githubUser = 'okalil'
 
-  const [communities, setCommunities] = useState([
-    {
-      id: 1232453647,
-      title: 'Chess Club',
-      image:
-        'https://media.digistormhosting.com.au/svc-au-tas-512-website/content/Chess-Club-Logo.jpg?mtime=20210205030705'
-    }
-  ])
+  const [communities, setCommunities] = useState(allCommunities)
 
   const githubURL = user => `https://github.com/${user}.png`
   const friends = [
-    { id: 21, title: 'Jamylle', image: githubURL('TheJamylle') },
-    { id: 22, title: 'Kalil', image: githubURL('okalil') },
-    { id: 23, title: 'Mário Souto', image: githubURL('omariosouto') },
-    { id: 24, title: 'Diego', image: githubURL('diego3g') }
+    { id: 21, title: 'Jamylle', imageUrl: githubURL('TheJamylle') },
+    { id: 22, title: 'Kalil', imageUrl: githubURL('okalil') },
+    { id: 23, title: 'Mário Souto', imageUrl: githubURL('omariosouto') },
+    { id: 24, title: 'Diego', imageUrl: githubURL('diego3g') }
   ]
 
   const largeScreen = useMediaQuery('(min-width: 860px)')
@@ -47,9 +40,9 @@ export default function Home({ followers }) {
         <Welcome />
         <Actions {...{ communities, setCommunities }} />
         <div>
+          <Relations {...{ title: 'Comunidades', relations: communities }} />
           <Relations title="Seguidores" relations={followers} />
           <Relations {...{ title: 'Amigos', relations: friends }} />
-          <Relations {...{ title: 'Comunidades', relations: communities }} />
         </div>
       </MainGrid>
     </>
@@ -57,18 +50,40 @@ export default function Home({ followers }) {
 }
 
 export const getStaticProps = async () => {
-  const { data } = await axios.get(
+  const githubFollowers = await axios.get(
     'https://api.github.com/users/okalil/followers'
   )
-  const followers = data.map(user => {
+  const followers = githubFollowers.data.map(user => {
     return {
       id: user.id,
       title: user.login,
-      image: user.avatar_url
+      imageUrl: user.avatar_url
     }
   })
 
+  const response = await axios.post(
+    'https://graphql.datocms.com/',
+    {
+      query: `
+        {allCommunities {
+          id
+          title
+          imageUrl
+        }}
+      `
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${process.env.DATO_FULL_API_KEY}`
+      }
+    }
+  )
+
+  const allCommunities = response.data.data.allCommunities
+
   return {
-    props: { followers }
+    props: { followers, allCommunities }
   }
 }

@@ -7,12 +7,12 @@ export function Relations({ title, relations }) {
         {title} ({relations.length})
       </h3>
       <ul>
-        {relations.map((user, i) => {
+        {relations.map(({id, title, image}) => {
           return (
-            <li key={i}>
+            <li key={id}>
               <UserLink href="/">
-                <img src={`https://github.com/${user}.png`} alt="user img" />
-                <sapn>{user}</sapn>
+                <img src={image} alt="user img" />
+                <span>{title}</span>
               </UserLink>
             </li>
           )

@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { Box } from '../Box'
 
-export function Actions() {
-  const [communities, setCommunities] = useState([])
+export function Actions({communities,setCommunities}) {
 
   const handleCreateCommunity = event => {
     event.preventDefault()
 
     const formData = new FormData(event.target)
-    setCommunities([...communities, 'Alurakut'])
+    const community = {
+      id: new Date().toISOString(),
+      title: formData.get('title'),
+      image: formData.get('image'),
+    }
+    setCommunities([...communities, community])
   }
 
   return (

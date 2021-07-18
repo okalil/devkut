@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { RelationsContainer, UserLink } from './styles'
 
 export function Relations({ title, relations }) {
@@ -7,13 +8,15 @@ export function Relations({ title, relations }) {
         {title} ({relations.length})
       </h3>
       <ul>
-        {relations.map(({id, title, imageUrl}) => {
+        {relations.slice(0, 6).map(({ id, title, imageUrl }) => {
           return (
             <li key={id}>
-              <UserLink href="/">
-                <img src={imageUrl} alt="user img" />
-                <span>{title}</span>
-              </UserLink>
+              <Link href="/">
+                <UserLink>
+                  <img src={imageUrl} alt="user img" />
+                  <span>{title}</span>
+                </UserLink>
+              </Link>
             </li>
           )
         })}

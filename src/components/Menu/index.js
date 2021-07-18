@@ -1,8 +1,6 @@
-import Link from 'next/link'
-
 import { useState } from 'react'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import { ProfileSidebarContent } from '../ProfileSidebarContent'
+import { Link } from '../Link'
 
 import {
   MenuWrapper,
@@ -35,15 +33,13 @@ export function Menu({ children }) {
               {links.map(item => {
                 return (
                   <Link href={item.slug} key={item.name.toLocaleLowerCase()}>
-                    <a>{item.name}</a>
+                    {item.name}
                   </Link>
                 )
               })}
             </Nav>
             <Nav>
-              <Link href="/logout">
-                <a>Sair</a>
-              </Link>
+              <Link href="/logout">Sair</Link>
               <div>
                 <input placeholder="Pesquisar no Devkut" />
               </div>

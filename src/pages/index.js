@@ -1,3 +1,7 @@
+import axios from 'axios'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
+import { useState } from 'react'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 
 import { Menu } from '../components/Menu'
@@ -8,12 +12,8 @@ import { ProfileSidebarContent } from '../components/ProfileSidebarContent'
 
 import { Box } from '../components/Box'
 import { MainGrid } from '../components/MainGrid'
-import { useState } from 'react'
-import axios from 'axios'
 
-export default function Home({ followers, allCommunities }) {
-  const githubUser = 'okalil'
-
+export default function Home({ githubUser, followers, allCommunities }) {
   const [communities, setCommunities] = useState(allCommunities)
 
   const githubURL = user => `https://github.com/${user}.png`
@@ -33,7 +33,7 @@ export default function Home({ followers, allCommunities }) {
       </Menu>
       <MainGrid>
         {largeScreen && (
-          <Box style={{ gridRow: '1/span 3' }}>
+          <Box as="aside" style={{ gridRow: '1/span 3' }}>
             <ProfileSidebarContent githubUser={githubUser} />
           </Box>
         )}
@@ -49,9 +49,22 @@ export default function Home({ followers, allCommunities }) {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ctx => {
+  const token = nookies.get(ctx).USER_TOKEN
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+
+  const { githubUser } = jwt.decode(token)
+
   const githubFollowers = await axios.get(
-    'https://api.github.com/users/okalil/followers'
+    `https://api.github.com/users/${githubUser}/followers`
   )
   const followers = githubFollowers.data.map(user => {
     return {
@@ -84,6 +97,6 @@ export const getServerSideProps = async () => {
   const allCommunities = response.data.data.allCommunities
 
   return {
-    props: { followers, allCommunities }
+    props: { githubUser, followers, allCommunities }
   }
 }

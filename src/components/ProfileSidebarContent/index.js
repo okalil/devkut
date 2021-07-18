@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '../Link'
 import { ProfileSidebarMenu } from './styles'
 
 export function ProfileSidebarContent({ githubUser }) {
@@ -18,9 +18,7 @@ export function ProfileSidebarContent({ githubUser }) {
       />
       <hr />
       <p>
-        <Link href={`/user/${githubUser}`}>
-          <a>@{githubUser}</a>
-        </Link>
+        <Link href={`/user/${githubUser}`}>@{githubUser}</Link>
       </p>
       <hr />
 
@@ -29,10 +27,8 @@ export function ProfileSidebarContent({ githubUser }) {
           {sidebarLinks.map(item => {
             return (
               <Link href={item.href} key={item.name}>
-                <a>
-                  <img src={`/${item.src}.svg`} alt={item.name.toLowerCase()} />
-                  {item.name}
-                </a>
+                <img src={`/${item.src}.svg`} alt={item.name.toLowerCase()} />
+                {item.name}
               </Link>
             )
           })}
